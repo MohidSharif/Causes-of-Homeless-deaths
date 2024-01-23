@@ -1,215 +1,165 @@
 ---
-title: "My title"
-subtitle: "My subtitle if needed"
+title: "Preserving the Life of the Homeless"
+subtitle: ""
 author: 
-  - First author
-  - Another author
-thanks: "Code and data are available at: LINK."
+  - Mohid Sharif
+thanks: "Code and data are available at: https://github.com/MohidSharif/Causes-of-Homeless-deaths."
 date: today
 date-format: long
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "How valuable is the life of a homeless person, and what efforts do we need to take to preseve their lives? To answer this question I obtained and analyzed data about causes of homeless deaths by age group and year. I found that drug abuse was the leading cause of death among homeless people followed by sickness and disease. By analyzing my findings I hope to identify the leading causes of death among the homeless so we can work towards changes that will help preserve life."
 format: pdf
 number-sections: true
 bibliography: references.bib
+header-includes:
+ \usepackage{float}
+ \floatplacement{figure}{H}
 ---
 
-```{r}
-#| include: false
-#| warning: false
-#| message: false
-
+```{r setup, include=FALSE}
+# Turn off echo for all code, disables knitting code chunks
+knitr::opts_chunk$set(echo = TRUE)
+# Turn off warning messaging in knitted paper file
+knitr::opts_chunk$set(warning = FALSE, message = FALSE) 
+# Import needed libraries
+library(kableExtra)
 library(tidyverse)
-library(palmerpenguins)
 ```
 
 
 # Introduction
 
-You can and should cross-reference sections and sub-sections. 
+Homelessness alone is a huge problem that seems to persist. Realizing that homelessness is a problem that may not be solved in the near future, we need to find a way to solve the issue of homeless deaths. How valuable is the life of a homeless person? What efforts should we make to preserve their lives? What takes more effort, reducing homeless mortality or ending homelessness? To answer these questions I set out to obtain information and see if I could understand why homeless people are dying. By understanding why they are dying I hope to find the best course to action to preserve the lives of the homeless.
 
-The remainder of this paper is structured as follows. @sec-data....
+I first analysed the data-set to understand how reports of deaths were being recorded and organized. Every report in the data-set records the cause of death, year of death, age group, gender, and count. These are just a handful of variables from a single data-set in a larger package but my research only required the ones I have listed. I then created three graphs to compare the amount of reports per age group, per year and the number of deaths per report, all of these color coded by cause of death. The first graph is a comparison of reports by age group, I found that younger ages (<20 years) were most likely to die due to drug toxicity, while the reports of age groups over 40 had the highest reports of disease/sickness followed by drug toxicity. The second graph shows the deaths per report, I used this graph to illustrate that despite seeming equal in terms of reports both sickness/disease and drug toxicity had alarmingly different death numbers by report. Drug toxicity showed a much higher number of deaths per report than any other cause of death. The last graph illustrated the change over the years of death reports, in this graph we can see that despite fluctuations we see no real pattern of increase or decrease in report numbers, however, there was a significant drop in reports in 2023 compared to previous years.
 
+Using my data I believe that we can deduce the main cause of deaths for homeless individuals and start targeting that cause to try and eliminate the threat towards homeless people. By far the biggest threat to homeless life is drug toxicity, knowing this we need to find a way to get drugs off the streets and get homeless people help with staying off of drugs and finding productive alternatives. The second highest cause is sickness/disease which could be due to issues with accessibility or affordability of healthcare. To reduce deaths by sickness/disease we can look towards increasing accessibility and affordability of healthcare for homeless people. Lastly, looking at the previous years we can look at any changes that may have been made in these categories and see if they made any differences. After analyzing the data from previous years I could see that if any changes were made before 2023, these changes made no difference in the data. In 2023 however, there is a big drop in reports which shows that if any changes were made in 2023 they may have affected the homeless deaths situation, although more data will be required to be sure if any changes are productive or not.
+
+The remainder of this paper is: @sec-data....
 
 
 # Data {#sec-data}
 
-Some of our data is of penguins (@fig-bills), from @palmerpenguins.
+I obtained my data from the City of Toronto **opendatatoronto** database portal, using the 'opendatatoronto' package [@citeopendatatoronto] and the statistical programming language **R** [@citeR]. I used the **tidyverse** package for data manipulation [@citetidyverse] and **kableExtra** for table formatting [@citekableExtra]. The header includes two lines of code **"usepackage{float}"** which allows the use of float in R markdown and the line **"floatplacement{figure}{H}"** [@citeholdposition] which keeps the tables and figures locked in the specific place where they are written in R markdown.
+
+This data set records reports of homeless deaths across Toronto and records the details of the deceased. The data records the **year of death, cause of death, age group, gender, and number of deaths** for every report. The data classifies cases by age group rather than specific ages, age groups are grouped by 20 year age gaps (E.g. "20 to 39 Years") except for the first group which is **"<20"** and the last group which is **"60+"**. Gender is identified and reported as **"Male"** or **"Female"**. Year of death is simply as the year the deaths were reported, starting from **2017** up until **2023**. Cause of deaths are classified as follows: **"Accident", "Cancer", "Cardiovascular Disease", "Covid-19", "Drug Toxicity", "Homicide", "Pneumonia", "Other", "Suicide", and "Unknown/Pending"**. And the number of deaths is simply the number of deaths provided in that report.
+
+@tbl-sample shows the data associated with cases reported as "death due to drug toxicity".This data shows us year, age group, gender and count of each reported case of drug toxicity.
 
 ```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
+#| label: tbl-sample
+#| tbl-cap: Deaths Due to Drug Toxicity
 #| echo: false
 
-ggplot(penguins, aes(x = island, fill = species)) +
-  geom_bar(alpha = 0.8) +
-  scale_fill_manual(values = c("darkorange","purple","cyan4"),
-                    guide = "none") +
-  theme_minimal() +
-  facet_wrap(~species, ncol = 1) +
-  coord_flip()
+# Import knitr
+library(knitr)
+
+# Read the data into a variable
+homeless_deaths <- read.csv("~/causes_of_homeless_deaths/inputs/data/unedited_data.csv")
+
+# Filter the data to be specific to data relating to drug txocity causes of death
+homeless_deaths |> 
+  filter(Cause_of_death == "Drug Toxicity", Age_group != "	
+Unknown") |>
+# Pipe this to include only year of death, age group, gender, and count.
+  select(Year.of.death, Age_group, Gender, Count) |>
+# Include 10 listings in the table
+  slice(1:10) |> 
+# Display the table with appropriate column names and format properties
+  kable(
+    col.names = c("Year", "Age Group", "Gender", "Count"),
+    digits = 1,
+    booktabs = TRUE,
+    linesep = "") |> 
+    kable_styling(latex_options = "HOLD_position")
 ```
 
-Talk more about it.
-
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
-
-```{r}
-#| label: fig-planes
-#| fig-cap: Relationship between wing length and width
-#| echo: false
-#| warning: false
-#| message: false
-
-analysis_data <- read_csv(here::here("outputs/data/analysis_data.csv"))
-
-analysis_data |> 
-  ggplot(aes(x = width, y = length)) +
-  geom_point(alpha = 0.8) +
-  theme_minimal() +
-  labs(x = "Wing width (mm)",
-       y = "Wing length (mm)")
-```
-
-Talk way more about it. 
+@tbl-sample line 1 can be read as such; 2 females in the age range 40-49 died in 2017 due to drug toxicity. The table is a good representation of which data is available to us and how we can use it to obtain which cause of deaths are most common by counting all reports that fall under that cause. I specifically filtered this table to only include drug toxicity cases to reduce result size and to showcase the data for a single cause of death. I also filtered all age groups identified as "Unknown" as this information provides no benefit to us.
 
 
-
-# Model
-
-The goal of our modelling strategy is twofold. Firstly,...
-
-Here we briefly describe the Bayesian analysis model used to investigate... Background details and diagnostics are included in [Appendix -@sec-model-details].
-
-## Model set-up
-
-Define $y_i$ as the number of seconds that the plane remained aloft. Then $\beta_i$ is the wing width and $\gamma_i$ is the wing length, both measured in millimeters.  
-
-\begin{align} 
-y_i|\mu_i, \sigma &\sim \mbox{Normal}(\mu_i, \sigma) \\
-\mu_i &= \alpha + \beta_i + \gamma_i\\
-\alpha &\sim \mbox{Normal}(0, 2.5) \\
-\beta &\sim \mbox{Normal}(0, 2.5) \\
-\gamma &\sim \mbox{Normal}(0, 2.5) \\
-\sigma &\sim \mbox{Exponential}(1)
-\end{align}
-
-We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`.
-
-
-### Model justification
-
-We expect a positive relationship between the size of the wings and time spent aloft. In particular...
-
-We can use maths by including latex between dollar signs, for instance $\theta$.
-
-
-# Results
-
-Our results are summarized in @tbl-modelresults.
-
-```{r}
-#| echo: false
-#| eval: true
-#| warning: false
-#| message: false
-
-library(rstanarm)
-
-first_model <-
-  readRDS(file = here::here("outputs/models/first_model.rds"))
-```
-
-```{r}
-#| echo: false
-#| eval: true
-#| label: tbl-modelresults
-#| tbl-cap: "Explanatory models of flight time based on wing width and wing length"
-#| warning: false
-
-modelsummary::modelsummary(
-  list(
-    "First model" = first_model
-  ),
-  statistic = "mad",
-  fmt = 2
-)
-```
-
-
-
-
-# Discussion
-
-## First discussion point {#sec-first-point}
-
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
-
-## Second discussion point
-
-## Third discussion point
-
-## Weaknesses and next steps
-
-Weaknesses and next steps should also be included.
+From here I further cleaned the data for graphing. I cleaned the data by grouping **"Cancer", "Covid-19", "Cardiovascular Disease", and "Pneumonia"** into a single group **"Sickness/Disease"**. I grouped these classifications because they all fall under one solvable service, healthcare. I also filtered out cause of deaths classified as "Unknown/Pending" and "other" as these provide no benefit to our data.
 
 \newpage
 
-\appendix
-
-# Appendix {-}
-
-
-# Additional data details
-
-# Model details {#sec-model-details}
-
-## Posterior predictive check
-
-In @fig-ppcheckandposteriorvsprior-1 we implement a posterior predictive check. This shows...
-
-In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. This shows... 
+@fig-agegraph shows the comparison of number of reports recorded for each age group.
 
 ```{r}
-#| eval: true
+#| label: fig-agegraph
+#| fig-cap: Death Reports by Age group
 #| echo: false
-#| message: false
-#| warning: false
-#| label: fig-ppcheckandposteriorvsprior
-#| layout-ncol: 2
-#| fig-cap: "Examining how the model fits, and is affected by, the data"
-#| fig-subcap: ["Posterior prediction check", "Comparing the posterior with the prior"]
 
-pp_check(first_model) +
-  theme_classic() +
-  theme(legend.position = "bottom")
+# Combine cancer, cardiovascular disease, covid-19, and pneumonia, into a single common classification: sickness/disease
+homeless_deaths$Cause_of_death[homeless_deaths$Cause_of_death == "Cancer"] <- "Sickness/Disease"
+homeless_deaths$Cause_of_death[homeless_deaths$Cause_of_death == "Cardiovascular Disease"] <- "Sickness/Disease"
+homeless_deaths$Cause_of_death[homeless_deaths$Cause_of_death == "COVID-19"] <- "Sickness/Disease"
+homeless_deaths$Cause_of_death[homeless_deaths$Cause_of_death == "Pneumonia"] <- "Sickness/Disease"
 
-posterior_vs_prior(first_model) +
-  theme_minimal() +
-  scale_color_brewer(palette = "Set1") +
-  theme(legend.position = "bottom") +
-  coord_flip()
+# Filter the data to exclude age group that are unknown, cause of deaths that are unknown/pending and cause of deaths that are other
+homeless_deaths |> 
+  filter(Age_group != "Unknown", Cause_of_death != "Unknown/Pending", Cause_of_death != "Other") |>
+# Plot this graph by counting all causes of deaths for each age group
+  ggplot(mapping = aes(x = Age_group, fill = Cause_of_death)) +
+  geom_bar()+
+# Format the bar graph with a theme and appropriate axis
+   theme_classic()+
+   theme(axis.text.x=element_text(angle=45,hjust=1,vjust=1)) +
+  labs(x = "Age Group",
+       y = "Reports",
+       fill = "Cause of Death")
 ```
 
-## Diagnostics
+@fig-agegraph shows a visual of the number of reports per age group for each cause of death. The biggest observation here is the difference in reports within age groups. @fig-agegraph shows us that youth despite having the least number of reports have the highest proportion of drug toxicity reports, demonstrating a big drug problem within the age group of <20. Sickness/disease seems to become a problem after 40 years of age as more health problems occur with age. @fig-agegraph shows a huge spike in sickness/disease reports for ages from 40+. Other than this we can see that drug toxicity is the number one cause of death for all ages. Understand that @fig-agegraph only shows reported cases, each reported case contains multiple deaths and as we will see in @fig-deathsperreport, drug toxicity has the most deaths per-report. Even though @fig-agegraph shows sickness/disease as the leading cause of death in some age groups that may not necessarily be the case as drug toxicity has the higher proportion of deaths reported per case.
 
-@fig-stanareyouokay-1 is a trace plot. It shows... This suggests...
+Our biggest concern from seeing this comparison should be to reduce the access to drugs for all ages and find alternative productive solutions to drug use. Secondly, we need to provide better and accessible healthcare for the homeless over 40 years of age. Suicide seems to be a big portion of reports for people in the age range of 20-39, maybe we can look towards mental health support for the homeless and see if we can provide some quality of life changes to homeless shelters and food banks.
 
-@fig-stanareyouokay-2 is a Rhat plot. It shows... This suggests...
+\newpage
+
+@fig-deathsperreport shows the comparison between deaths reported for each cause of death.
 
 ```{r}
+#| label: fig-deathsperreport
+#| fig-cap: Number of Deaths per Report
 #| echo: false
-#| eval: true
-#| message: false
-#| warning: false
-#| label: fig-stanareyouokay
-#| fig-cap: "Checking the convergence of the MCMC algorithm"
-#| fig-subcap: ["Trace plot", "Rhat plot"]
-#| layout-ncol: 2
 
-plot(first_model, "trace")
-
-plot(first_model, "rhat")
+# Filter the data to exclude age group that are unknown, cause of deaths that are unknown/pending and cause of deaths that are other
+homeless_deaths |> 
+  filter(Age_group != "Unknown", Cause_of_death != "Unknown/Pending", Cause_of_death != "Other") |>
+# Plot this graph by counting all values of cause of death and the number of deaths in each report
+  ggplot(mapping = aes(x = Count, fill = Cause_of_death)) +
+  geom_bar()+
+# Format the bar graph with a theme and appropriate axis
+   theme_classic()+
+   theme(axis.text.x=element_text(angle=45,hjust=1,vjust=1)) +
+  labs(x = "Deaths",
+       y = "Reports",
+       fill = "Cause of Death")
 ```
+
+The reason I wanted to illustrate this comparison was to show that quantity in reports is not proportional to death toll. As @fig-deathsperreport illustrates, most reports are within the 1-2 range, and within this range lies the majority of sickness/disease reports. With this we can see that despite having the most reports in @fig-agegraph the number of deaths per report is low. Now looking at drug toxicity we can see that the number of deaths are spread out from 0-16 deaths per report while there are some reports that have death tolls as high as 40 or even 50 deaths. Showing that drug toxicity is the leading cause of death and may be the problem that needs to be prioritized.
+
+\newpage
+
+@fig-reportsbyyear shows the change in number of reports over the years, from 2017 up until 2023.
+
+```{r}
+#| label: fig-reportsbyyear
+#| fig-cap: Number of Reports Since 2017
+#| echo: false
+
+# Filter the data to exclude age group that are unknown, cause of deaths that are unknown/pending and cause of deaths that are other
+homeless_deaths |> 
+  filter(Age_group != "Unknown", Cause_of_death != "Unknown/Pending", Cause_of_death != "Other") |>
+# Plot this graph by counting all values of cause of death and showing the change over 7 years
+  ggplot(mapping = aes(x = Year.of.death, fill = Cause_of_death)) +
+  geom_bar()+
+# Format the bar graph with a theme and appropriate axis
+   theme_classic()+
+   theme(axis.text.x=element_text(angle=45,hjust=1,vjust=1)) +
+  labs(x = "Year",
+       y = "Reports",
+       fill = "Cause of Death")
+```
+
+After looking at @fig-reportsbyyear I was honestly disappointed to see that practically no progress has been made in regards to this issue over the last 7 years. Even though there are changes and fluctuations, there is no decreasing or increasing trend in neither the overall reports number nor reports of individual causes. The only ray of hope in @fig-reportsbyyear, is the number of reports in 2023, which shows an almost 50% decrease from previous years. Going forward we should look at what changes were made between 2022 and 2023 that caused the situation to improve so drastically. Doing this we can apply this to other regions in Canada and preserve the life of the homeless throughout the country.
 
 
 
