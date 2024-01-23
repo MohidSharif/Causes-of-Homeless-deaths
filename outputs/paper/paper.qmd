@@ -34,6 +34,8 @@ I first analysed the data-set to understand how reports of deaths were being rec
 
 Using my data I believe that we can deduce the main cause of deaths for homeless individuals and start targeting that cause to try and eliminate the threat towards homeless people. By far the biggest threat to homeless life is drug toxicity, knowing this we need to find a way to get drugs off the streets and get homeless people help with staying off of drugs and finding productive alternatives. The second highest cause is sickness/disease which could be due to issues with accessibility or affordability of healthcare. To reduce deaths by sickness/disease we can look towards increasing accessibility and affordability of healthcare for homeless people. Lastly, looking at the previous years we can look at any changes that may have been made in these categories and see if they made any differences. After analyzing the data from previous years I could see that if any changes were made before 2023, these changes made no difference in the data. In 2023 however, there is a big drop in reports which shows that if any changes were made in 2023 they may have affected the homeless deaths situation, although more data will be required to be sure if any changes are productive or not.
 
+![Sketch of what our graphs and tables may look like.](~/causes_of_homeless_deaths/inputs/sketches/sketch.jpg)
+
 The remainder of this paper is: @sec-data....
 
 
