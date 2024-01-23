@@ -1,16 +1,38 @@
-# Starter folder
+This paper contains the R project used in creating the paper "Preserving the Lives of the Homeless".
 
-## Overview
+Abstract: How valuable is the life of a homeless person, and what efforts do we need to
+take to preseve their lives? To answer this question I obtained and analyzed data
+about causes of homeless deaths by age group and year. I found that drug abuse
+was the leading cause of death among homeless people followed by sickness and
+disease. By analyzing my findings I hope to identify the leading causes of death
+among the homeless so we can work towards changes that will help preserve life.
 
-This repo provides students with a foundation for their own projects associated with *Telling Stories with Data*. You do not need every aspect for every paper and you should delete aspects that you do not need.
+The repository contains three folders: inputs, outputs, and scripts which are organised as follows:
 
-To use this folder, click the green "Code" button", then "Download ZIP". Move the downloaded folder to where you want to work on your own computer, and then modify it to suit.
+Inputs:
 
-## File Structure
+Data: the raw data csv files obtained from OpenDataToronto
 
-The repo is structured as:
+Materials: Sketches used in the paper
 
--   `input/data` contains the data sources used in analysis including the raw data.
--   `outputs/data` contains the cleaned dataset that was constructed.
--   `outputs/paper` contains the files used to generate the paper, including the Quarto document and reference bibliography file, as well as the PDF of the paper. 
--   `scripts` contains the R scripts used to simulate, download and clean data.
+Outputs:
+
+Paper: Quarto, a final pdf document, and a bibliography
+
+Scripts:
+
+00-simulate_data.R: Simulates the data to be studies in the paper
+
+01-data_download.R: This script downloads, processes, and cleans the data obtained in the DHS final report
+
+To Generate the paper:
+
+Download the repository's main folder
+
+Open causes_of_homless_deaths.Rproj in RStudio
+
+Install libraries using install.packages() and run webshot::install_phantomjs() in the console so the DAGs compile
+
+Run 01-data_download.R to download the pdf report, obtain the cleaned and processed data set
+
+render paper.qmd to reproduce the paper
