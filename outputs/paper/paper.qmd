@@ -1,5 +1,5 @@
 ---
-title: "Preserving the Life of the Homeless"
+title: "Preserving the Lives of the Homeless"
 subtitle: ""
 author: 
   - Mohid Sharif
