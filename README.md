@@ -1,3 +1,5 @@
+# Overview
+
 This paper contains the R project used in creating the paper "Preserving the Lives of the Homeless".
 
 Abstract: How valuable is the life of a homeless person, and what efforts do we need to
@@ -9,23 +11,21 @@ among the homeless so we can work towards changes that will help preserve life.
 
 Statement on LLM useage: No LLMs were used for any aspect of this work.
 
-The repository contains three folders: inputs, outputs, and scripts which are organised as follows:
+# File Structure
 
-Inputs:
+The repository contains three folders: `inputs`, `outputs`, and `scripts` which are organised as follows:
 
-Data: the raw data csv files obtained from OpenDataToronto
+`inputs/data`: the raw data csv files obtained from OpenDataToronto
 
-Sketches: Sketches used in the paper
+`inputs/sketches`: Sketches used in the paper
 
-Outputs:
+`outputs/paper`: Quarto, a final pdf document, and a bibliography
 
-Paper: Quarto, a final pdf document, and a bibliography
+`scripts/00-simulate_data.R`: Simulates the data to be studies in the paper
 
-Scripts:
+`scripts/01-data_download.R`: This script downloads, processes, and cleans the data obtained in the DHS final report
 
-00-simulate_data.R: Simulates the data to be studies in the paper
-
-01-data_download.R: This script downloads, processes, and cleans the data obtained in the DHS final report
+# Generate Paper
 
 To Generate the paper:
 
