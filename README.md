@@ -15,7 +15,7 @@ Inputs:
 
 Data: the raw data csv files obtained from OpenDataToronto
 
-Materials: Sketches used in the paper
+Sketches: Sketches used in the paper
 
 Outputs:
 
