@@ -33,8 +33,8 @@ Download the repository's main folder
 
 Open causes_of_homless_deaths.Rproj in RStudio
 
-Install libraries using install.packages() and run webshot::install_phantomjs() in the console so the DAGs compile
+Install libraries opendatatoronto, tidyverse, knitr, and janitor using install.packages()
 
-Run 01-data_download.R to download the pdf report, obtain the cleaned and processed data set
+Run 01-data_download.R to download the raw data
 
 render paper.qmd to reproduce the paper
