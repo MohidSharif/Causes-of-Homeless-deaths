@@ -7,6 +7,8 @@ was the leading cause of death among homeless people followed by sickness and
 disease. By analyzing my findings I hope to identify the leading causes of death
 among the homeless so we can work towards changes that will help preserve life.
 
+Statement on LLM useage: No LLMs were used for any aspect of this work.
+
 The repository contains three folders: inputs, outputs, and scripts which are organised as follows:
 
 Inputs:
